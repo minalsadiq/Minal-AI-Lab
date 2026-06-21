@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minal AI Lab - AI & Web Development Portfolio</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Arial, sans-serif;
+        }
+        body {
+            background-color: #0F172A;
+            color: #E2E8F0;
+            line-height: 1.6;
+        }
+        
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: #1E293B;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid #38BDF8;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+        .logo {
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            color: #FFFFFF;
+        }
+        .logo span {
+            color: #38BDF8;
+        }
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 15px;
+        }
+        nav ul li a {
+            color: #94A3B8;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 12px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        nav ul li a:hover, nav ul li a.active {
+            color: #FFFFFF;
+            background-color: #38BDF8;
+        }
+
+        /* --- PAGES ARCHITECTURE --- */
+        .page-section {
+            display: none;
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in-out forwards;
+        }
+        .page-section.active {
+            display: block;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- HERO BANNER & CARDS --- */
+        .hero {
+            text-align: center;
+            padding: 60px 20px;
+            background: linear-gradient(135deg, #1E3A8A 0%, #0F172A 100%);
+            border-radius: 16px;
+            margin-bottom: 40px;
+            border: 1px solid #334155;
+        }
+        .hero h1 {
+            font-size: 42px;
+            color: #FFFFFF;
+            margin-bottom: 15px;
+        }
+        .hero p {
+            font-size: 18px;
+            color: #38BDF8;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 25px;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: #38BDF8;
+        }
+        .card h3 {
+            color: #FFFFFF;
+            font-size: 18px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .card p {
+            color: #94A3B8;
+            font-size: 14px;
+        }
+        .badge {
+            background-color: #0369A1;
+            color: #38BDF8;
+            font-size: 11px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            display: inline-block;
+            margin-top: 10px;
+        }
+
+        /* --- CONTACT & FORMS --- */
+        .form-group {
+            margin-bottom: 20px;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #FFFFFF;
+        }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: #FFFFFF;
+            font-size: 15px;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #38BDF8;
+        }
+        .submit-btn {
+            background-color: #38BDF8;
+            color: #0F172A;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .submit-btn:hover {
+            background-color: #0EA5E9;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #1E293B;
+            text-align: center;
+            padding: 20px;
+            margin-top: 60px;
+            border-top: 1px solid #334155;
+            font-size: 14px;
+            color: #64748B;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- NAVIGATION HEADER -->
+    <header>
+        <div class="nav-container">
+            <div class="logo">MINAL <span>AI LAB</span></div>
+            <nav>
+                <ul>
+                    <li><a onclick="switchPage('home')" id="nav-home" class="active">Home</a></li>
+                    <li><a onclick="switchPage('about')" id="nav-about">About</a></li>
+                    <li><a onclick="switchPage('services')" id="nav-services">Services</a></li>
+                    <li><a onclick="switchPage('portfolio')" id="nav-portfolio">Portfolio</a></li>
+                    <li><a onclick="switchPage('pricing')" id="nav-pricing">Pricing</a></li>
+                    <li><a onclick="switchPage('testimonials')" id="nav-testimonials">Reviews</a></li>
+                    <li><a onclick="switchPage('contact')" id="nav-contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- PAGE 1: HOME -->
+    <div id="home" class="page-section active">
+        <div class="hero">
+            <h1>Smart AI & Web Solutions</h1>
+            <p>We build professional websites, train machine learning models, and create easy-to-use data dashboards for your business needs.</p>
+        </div>
+        <h2 style="text-align: center; margin-bottom: 20px; color: #FFFFFF;">Why Work With Us?</h2>
+        <div class="grid-layout">
+            <div class="card">
+                <h3>⚡ Fast & Reliable</h3>
+                <p>We deliver clean, fast, and high-quality work that runs perfectly without any issues.</p>
+            </div>
+            <div class="card">
+                <h3>💎 Data Accuracy</h3>
+                <p>We carefully clean and analyze your data to get the best results for your AI projects.</p>
+            </div>
+            <div class="card">
+                <h3>🔒 Secure Work</h3>
+                <p>Your ideas, code, and data are always safe, secure, and private with us.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 2: ABOUT -->
+    <div id="about" class="page-section">
+        <h2 style="color: #FFFFFF; margin-bottom: 15px;">About Minal AI Lab</h2>
+        <p style="color: #94A3B8; margin-bottom: 20px;">Welcome to Minal AI Lab! We are a professional team focused on making your ideas real. We love writing clean code, building smart models, and designing modern websites that make your business stand out.</p>
+        <div class="card" style="margin-bottom: 20px;">
+            <h3 style="color: #38BDF8;">Our Technical Skills</h3>
+            <p style="color: #E2E8F0; margin-bottom: 10px;">We have strong practical experience in these modern technologies:</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 10px;">
+                <span class="badge">Python Programming</span>
+                <span class="badge">Machine Learning (AI)</span>
+                <span class="badge">Model Training (TensorFlow)</span>
+                <span class="badge">Streamlit Dashboards</span>
+                <span class="badge">Data Analysis (Pandas)</span>
+                <span class="badge">Web Development (HTML & CSS)</span>
+                <span class="badge">C++ Language</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 3: SERVICES -->
+    <div id="services" class="page-section">
+        <h2 style="text-align: center; margin-bottom: 10px; color: #FFFFFF;">What We Do</h2>
+        <p style="text-align: center; color: #94A3B8; margin-bottom: 20px;">Professional services customized just for your requirements.</p>
+        <div class="grid-layout">
+            <div class="card">
+                <h3>🌐 Website Development</h3>
+                <p>We create beautiful, modern, and fully responsive websites from scratch that work great on mobiles and laptops.</p>
+            </div>
+            <div class="card">
+                <h3>🧠 Model Training</h3>
+                <p>We set up and train smart AI models using your datasets to help you predict results with high accuracy.</p>
+            </div>
+            <div class="card">
+                <h3>⚙️ Machine Learning Projects</h3>
+                <p>We build smart systems, clean your complex data, and write powerful Python code to automate your work.</p>
+            </div>
+            <div class="card">
+                <h3>📊 Data Science & Dashboards</h3>
+                <p>We create beautiful interactive dashboards using Streamlit to display your charts and business reports clearly.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 4: PORTFOLIO -->
+    <div id="portfolio" class="page-section">
+        <h2 style="margin-bottom: 10px; color: #FFFFFF;">Our Work & Projects</h2>
+        <p style="color: #94A3B8; margin-bottom: 25px;">Here are some of the real-world projects we have successfully created and trained.</p>
+        <div class="grid-layout">
+            <div class="card">
+                <h3 style="color: #38BDF8;">Apple Disease Detection</h3>
+                <p>Created a smart AI system that looks at leaf images and accurately detects if an apple crop has a disease or not.</p>
+                <span class="badge">Image AI</span> <span class="badge">Model Training</span>
+            </div>
+            <div class="card">
+                <h3 style="color: #38BDF8;">IMDB Sentiment Analysis</h3>
+                <p>Trained a text model that reads movie reviews and automatically tells if the customer feedback is positive or negative.</p>
+                <span class="badge">Text AI</span> <span class="badge">TensorFlow</span>
+            </div>
+            <div class="card">
+                <h3 style="color: #38BDF8;">Movie Analysis Dashboard</h3>
+                <p>Built a live web dashboard using Streamlit that displays interactive charts, filters, and complete movie data analytics.</p>
+                <span class="badge">Streamlit</span> <span class="badge">Data Science</span>
+            </div>
+            <div class="card">
+                <h3 style="color: #38BDF8;">Movie Data Analyst Engine</h3>
+                <p>Analyzed large cinematic datasets using Python and Pandas to find top-rating trends and hidden patterns easily.</p>
+                <span class="badge">Data Analytics</span> <span class="badge">Pandas</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 5: PRICING -->
+    <div id="pricing" class="page-section">
+        <h2 style="text-align: center; margin-bottom: 20px; color: #FFFFFF;">Simple & Affordable Plans</h2>
+        <div class="grid-layout">
+            <div class="card" style="text-align: center;">
+                <h3>Standard Web Solution</h3>
+                <p style="font-size: 24px; color: #38BDF8; margin: 15px 0;">Custom Price</p>
+                <p>Complete custom website development, simple automation scripts, clean design layouts, and quick updates.</p>
+            </div>
+            <div class="card" style="text-align: center; border-color: #38BDF8;">
+                <h3>Advanced AI System</h3>
+                <p style="font-size: 24px; color: #38BDF8; margin: 15px 0;">Premium Price</p>
+                <p>Full AI model training, interactive Streamlit dashboards, deep data science projects, and lifetime support.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 6: REVIEWS / TESTIMONIALS -->
+    <div id="testimonials" class="page-section">
+        <h2 style="margin-bottom: 15px; color: #FFFFFF;">What Our Clients Say</h2>
+        <div class="grid-layout">
+            <div class="card">
+                <p style="font-style: italic;">"The web design and AI model delivered by Minal AI Lab worked perfectly. The code was clean, very easy to understand, and delivered right on time!"</p>
+                <h4 style="color: #FFFFFF; margin-top: 15px;">- Software Client</h4>
+            </div>
+            <div class="card">
+                <p style="font-style: italic;">"Great experience! The Streamlit dashboard helps us see all our dynamic charts in one place. Highly recommended for data science work."</p>
+                <h4 style="color: #FFFFFF; margin-top: 15px;">- Business Owner</h4>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAGE 7: CONTACT -->
+    <div id="contact" class="page-section">
+        <h2 style="color: #FFFFFF;">Contact Us</h2>
+        <p style="color: #94A3B8; margin-bottom: 25px;">Have a new website idea or an AI model training project? Message us today and let's get started!</p>
+        
+        <div style="background-color: #1E293B; padding: 20px; border-radius: 8px; margin-bottom: 30px; border-left: 4px solid #38BDF8;">
+            <p style="margin-bottom: 5px;"><strong>📞 Phone Number:</strong> 03091415861</p>
+            <p><strong>✉️ Email Address:</strong> minalsadiq310@gmail.com</p>
+        </div>
+
+        <form onsubmit="event.preventDefault(); alert('Thank you! Your message simulation is successful.');">
+            <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" placeholder="Enter your full name" required>
+            </div>
+            <div class="form-group">
+                <label>Your Email Address</label>
+                <input type="email" placeholder="name@example.com" required>
+            </div>
+            <div class="form-group">
+                <label>Project Details</label>
+                <textarea rows="5" placeholder="Tell us about your website, machine learning, or dashboard project..." required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Minal AI Lab. All Rights Reserved. Made with Clean Code.</p>
+    </footer>
+
+    <!-- INTERACTIVE PAGE MANAGER SCRIPT -->
+    <script>
+        function switchPage(pageId) {
+            const pages = document.querySelectorAll('.page-section');
+            pages.forEach(page => page.classList.remove('active'));
+            
+            const links = document.querySelectorAll('nav ul li a');
+            links.forEach(link => link.classList.remove('active'));
+            
+            document.getElementById(pageId).classList.add('active');
+            document.getElementById('nav-' + pageId).classList.add('active');
+            
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>
